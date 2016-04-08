@@ -1,0 +1,6 @@
+11e6057203a3d94bdba1da028b4c4eed  usr/bin/vtep-ctl
+219587b28a3fa5e71dbe5471ba99566d  usr/share/doc/openvswitch-vtep/changelog.Debian.gz
+ae394a556bd86ade4f4184a91136cd27  usr/share/doc/openvswitch-vtep/copyright
+c4b698f8021fbe96f68fe97c7b904742  usr/share/man/man8/vtep-ctl.8.gz
+8a8709bf0a4acfe7e48b2b66272f61b3  usr/share/openvswitch/scripts/ovs-vtep
+0c99c0ab4f71bd437538c54fbd1e8f77  usr/share/openvswitch/vtep.ovsschema

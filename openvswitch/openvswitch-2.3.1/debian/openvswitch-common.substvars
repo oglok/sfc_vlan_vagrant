@@ -1,0 +1,3 @@
+python:Depends=python:any
+shlibs:Depends=libc6 (>= 2.16), libssl1.0.0 (>= 1.0.0)
+misc:Depends=

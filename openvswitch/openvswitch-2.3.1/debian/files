@@ -1,0 +1,10 @@
+openvswitch-common_2.3.1-1_amd64.deb net extra
+openvswitch-switch_2.3.1-1_amd64.deb net extra
+openvswitch-ipsec_2.3.1-1_amd64.deb net extra
+openvswitch-dbg_2.3.1-1_amd64.deb debug extra
+openvswitch-vtep_2.3.1-1_amd64.deb net extra
+openvswitch-datapath-source_2.3.1-1_all.deb net extra
+openvswitch-datapath-dkms_2.3.1-1_all.deb net extra
+openvswitch-pki_2.3.1-1_all.deb net extra
+python-openvswitch_2.3.1-1_all.deb python extra
+openvswitch-test_2.3.1-1_all.deb net extra

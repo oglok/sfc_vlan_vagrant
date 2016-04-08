@@ -1,0 +1,149 @@
+
+Author = "Ricardo Noriega, Brady Johnson"
+License = "Eclipse Public License v1.0"
+Email = "ricardonor@gmail.com, bradyallenjohnson@gmail.com"
+Version = "1.2"
+
+
+	SFCOFL2 Demo
+-----------------------------
+
+This demo is intended to be a playground for Service Function Chaining with OpenDaylight.
+In few steps, a new virtual machine shall be created with all the necessary components to initiate 
+service functions, service function forwarders as well as clients, servers, etc.
+
+This demo comes with a default configuration that could be modified to create customized use cases and
+discover the potential of SFC (Service Function Chaining).
+
+As a brief explanation of the demo, the environment contains one client, one web-server, two SFs (header enrichment) and two SFFs. 
+In the configuration files of SFC OpenDaylight, there are three service chains defined: one will pass SF1, one will pass SF2 and one will pass SF1 and SF2.
+Depending on the service chain that is assign to the client IP, the content of the webpage will be different.
+
+Requirements:
+
+- VirtualBox 4.0 or newer
+- Vagrant 1.7 or newer (http://www.vagrantup.com/downloads.html)
+
+
+	Installation Instructions
+------------------------------------------
+
+Once the system where the demo shall be run, has got all the required components, the installation process is very
+easy and automated. Go to this current folder and execute the following command:
+
+	vagrant up --provider virtualbox
+
+This process shall download Ubuntu 14.04 image and start provision all the software. Let it work until you see the prompt
+appear. The whole process would last around 30 minutes. It shall take so long only the very first time.
+
+NOTE: I recommend to read some documentation about Vagrant in order to understand what you are doing. Every state of the new virtual machine should be controlled
+with Vagrant commands.
+
+Once the prompt shows up, execute the following command in order to reload some components properly after installation:
+
+	vagrant reload --provision
+
+A new VirtualBox machine shall pop up, now with the X-server up and running. Let the process ends as you did before (until the prompts appears).
+
+Please, use the Desktop environment to log into the system with the following credentials:
+
+	user: vagrant
+	password: vagrant
+
+For this demo, mininet is used to create hosts, switches, etc. Mininet and OpenDaylight should be running at this point. Both processes' outputs are
+sent to two "screens" (SW that allows you to open serveral terminals in the same window).
+
+In order to check that OpenDaylight and Mininet are running, please, open a new terminal within virtualbox machine and execute the following command:
+
+	sudo screen -ls
+
+Lets attach to mininet screen:
+
+	sudo screen -r mininet
+
+NOTE: In order to detach the screen process without killing the process running in it, please do Ctrl+a and Ctrl+d. 
+
+Within the mininet console, there is the option to execute a shell script. Please, run the following:
+
+	source env_setup.sh
+
+This script shall start the "Header Enrichment" functions as well as the webserver with the required configuration. Furthermore, a web browser shall
+appear as it were opened from the client machine.
+
+OpenDaylight is up&running, but no configuration has been pushed to the SFFs (Service Function Forwarders). In order to do this, go to the following folder:
+
+	cd ~/sfcofl2
+
+and start a nice tool called rest_sender.py:
+
+	python rest_sender.py -prefix rest_sender/vlan-config
+
+In that folder (rest_sender/vlan-config) there are all the configuration files that contains how many service chains shall be created, definition of the 
+RSPs (Rendered Service Paths) and many more data. If you want to create new use cases and new topology, these files should be modified.
+Once you execute this tool, a new interactive menu appears which looks like this:
+
+Choose Option to perform:
+ 0) Quit
+ 1) Send SF REST
+ 2) Send SFC REST
+ 3) Send SFF REST
+ 4) Send SFP REST
+ 5) Send RSP REST
+ 6) Send ACL REST
+ 7) Send all ordered: (SFsel, SF, SFF, SFC, SFP, RSP)
+ 8) Query all: (SFsel, SF, SFF, SFC, SFP, RSP)
+ 9) Query Nodes
+10) Change config file path, currently [rest_sender/vlan-config/]
+11) Validate config files JSON syntax
+
+
+At first, there isn't any configuration sent to OpenDaylight, but you could get that info with the option number 8, or how many nodes there are in the
+infrastructure with option 9.
+
+In oder to send all the required configuration, use option number 7. So do it! Press 7.
+
+If everything goes well, some HTTP 200 codes should appear.
+
+We are almost done with the setup. In the same folder where you are right now (~/sfcofl2) there is another tool called client_tool.py. Basically, the purpose of this tool is to display available clients and RSPs and to assign a client to an RSP.
+
+List all the clients:
+
+	./client_tool.py -C
+
+List all the RSPs:
+
+	./client_tool.py -R
+	
+Assign the first RSP to the only available client:
+
+	./client_tool.py -C client1 -I 1
+
+NOTE: Listing the RSPs should show 6 different paths. There are three chains, each one containing two RSPs (way forward and way back).
+
+Now, execute the following script:
+
+	./update_rsp_tor.py
+
+And we are ready to go!
+
+Go to the client's web browser, we mentioned before and type the following URL:
+
+	http://10.10.0.1/index.html
+
+This is the server's IP and the webpage. This Service Chain crosses both service functions, so that should be indicated in the content of the web.
+
+In order to assign another service chain, use the client_tool.py as before but with the following RSP:
+
+	./client_tool.py -C client1 -I 5 (to assign the service chain that pass through the SF1)
+	./client_tool.py -C client1 -I 3 (to assign the service chain that pass through the SF2)
+
+The script update_rsp_tor.py is not necessary to be executed everytime a different service chain is assigned to the client.
+
+If the webpage is refreshed everytime we change the service chain, the content shall change accordingly.
+
+
+NOTE: In order to change the topology of the demo, please, check the usage of the sfcofl2_mininet.py script that you will find on the very same folder. There are many options to create several clients, several servers, connect several SFs to the same SFFs, etc.
+
+With this simple use case, the potential of SFC (Service Function Chaining) is demostrated. I encourage you to play with it, to change the configuration, to try out new topologies and new use cases.
+
+

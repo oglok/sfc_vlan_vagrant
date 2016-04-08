@@ -1,0 +1,33 @@
+[
+  {
+    id:0
+    text:"slide 1"
+  },
+  {
+    id:1
+    text:"slide 2"
+
+  },
+  {
+    id:2
+    text:"slide 3"
+
+  },
+  {
+    id:3
+    text:"slide 4"
+
+  },
+  {
+    id:4
+    text:"slide 5"
+  },
+  {
+    id:5
+    text:"slide 6"
+  },
+  {
+    id:6
+    text:"slide 7"
+  },
+]

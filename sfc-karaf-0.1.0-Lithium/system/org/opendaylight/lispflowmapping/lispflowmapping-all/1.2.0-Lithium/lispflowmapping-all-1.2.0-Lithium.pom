@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.opendaylight.lispflowmapping</groupId>
+    <artifactId>lispflowmapping-commons</artifactId>
+    <version>1.2.0-Lithium</version>
+    <relativePath>commons/parent</relativePath>
+  </parent>
+
+  <artifactId>lispflowmapping-all</artifactId>
+  <packaging>pom</packaging>
+  <!-- Used by Sonar to set project name -->
+  <name>lispflowmapping</name>
+
+  <prerequisites>
+    <maven>3.1.1</maven>
+  </prerequisites>
+
+  <modules>
+    <module>commons/parent</module>
+    <module>commons/build_tools</module>
+    <module>commons/unittest_tools</module>
+    <module>artifacts</module>
+    <module>mappingservice</module>
+    <module>features</module>
+    <module>distribution-karaf</module>
+  </modules>
+
+  <build>
+    <plugins>
+<!--       <plugin>
+        In this project we want to automatically sort all poms, thus we
+             add the invocation of this plugin to the root parent. Configuration is in
+             odlparent.
+        <groupId>com.google.code.sortpom</groupId>
+        <artifactId>maven-sortpom-plugin</artifactId>
+      </plugin> -->
+      <plugin>
+        <!-- Check for coding style violations.  Configuration in odlparent. -->
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+      </plugin>
+    </plugins>
+  </build>
+</project>

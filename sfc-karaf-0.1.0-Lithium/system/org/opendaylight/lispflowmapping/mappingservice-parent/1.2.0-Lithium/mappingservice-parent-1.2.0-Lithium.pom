@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>org.opendaylight.controller</groupId>
+    <artifactId>config-parent</artifactId>
+    <version>0.3.0-Lithium</version>
+    <relativePath>../../controller/opendaylight/config/config-parent</relativePath>
+  </parent>
+
+  <groupId>org.opendaylight.lispflowmapping</groupId>
+  <artifactId>mappingservice-parent</artifactId>
+  <version>1.2.0-Lithium</version>
+  <packaging>pom</packaging>
+  <name>Mapping Service Parent POM</name>
+
+  <modules>
+    <module>yangmodel</module>
+    <module>api</module>
+    <module>config</module>
+    <module>clusterdao</module>
+    <module>implementation</module>
+    <module>southbound</module>
+    <module>northbound</module>
+    <module>neutron</module>
+    <module>netconf</module>
+    <module>shell</module>
+    <module>integrationtest</module>
+  </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
+        <artifactId>lispflowmapping-artifacts</artifactId>
+        <version>${project.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.opendaylight.neutron</groupId>
+        <artifactId>neutron-spi</artifactId>
+        <version>0.5.0-Lithium</version>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <!-- common testing dependencies -->
+  <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>common.unittest.tools</artifactId>
+      <version>${project.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit-addons</groupId>
+      <artifactId>junit-addons</artifactId>
+      <version>1.4</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-core</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-junit4</artifactId>
+      <version>2.6.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.jmock</groupId>
+      <artifactId>jmock-legacy</artifactId>
+      <version>2.6.0</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!-- Temporarily override the odlparent checkstyle configuration.
+               We want to enforce some simple rules and add more as we clean up code -->
+          <artifactId>maven-checkstyle-plugin</artifactId>
+          <configuration>
+            <configLocation>checkstyle/java_rules.xml</configLocation>
+            <excludes>org/opendaylight/yang/gen/**,**/config/yang/**</excludes>
+            <failsOnError>true</failsOnError>
+            <consoleOutput>true</consoleOutput>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>org.opendaylight.lispflowmapping</groupId>
+              <artifactId>common.build.tools</artifactId>
+              <version>${project.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <phase>process-sources</phase>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+       <groupId>org.jacoco</groupId>
+       <artifactId>jacoco-maven-plugin</artifactId>
+       <configuration>
+         <includes>
+           <include>org.opendaylight.lispflowmapping.*</include>
+         </includes>
+       </configuration>
+       <executions>
+         <execution>
+           <id>pre-test</id>
+           <goals>
+             <goal>prepare-agent</goal>
+           </goals>
+         </execution>
+         <execution>
+           <id>post-test</id>
+           <goals>
+             <goal>report</goal>
+           </goals>
+           <phase>test</phase>
+         </execution>
+       </executions>
+     </plugin>
+    </plugins>
+  </build>
+</project>

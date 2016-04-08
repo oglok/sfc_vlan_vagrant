@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>org.jboss.resteasy</groupId>
+  <artifactId>jaxrs-api</artifactId>
+  <versioning>
+    <release>3.0.4.Final</release>
+    <versions>
+      <version>3.0.4.Final</version>
+    </versions>
+    <lastUpdated>20150623080457</lastUpdated>
+  </versioning>
+</metadata>

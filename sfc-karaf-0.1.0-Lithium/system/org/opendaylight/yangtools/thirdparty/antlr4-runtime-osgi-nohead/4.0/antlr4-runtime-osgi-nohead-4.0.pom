@@ -1,0 +1,56 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.opendaylight.yangtools.thirdparty</groupId>
+        <artifactId>third-party-parent</artifactId>
+        <version>0.1.2</version>
+    </parent>
+    <artifactId>antlr4-runtime-osgi-nohead</artifactId>
+    <version>4.0</version>
+    <packaging>bundle</packaging>
+    <scm>
+        <connection>scm:git:ssh://git.opendaylight.org:29418/controller.git</connection>
+        <developerConnection>scm:git:ssh://git.opendaylight.org:29418/controller.git</developerConnection>
+        <url>https://wiki.opendaylight.org/view/OpenDaylight_Controller:MD-SAL</url>
+    </scm>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-Name>Antlr4 Runtime Library</Bundle-Name>
+                        <Bundle-SymbolicName>org.antlr.antlr4</Bundle-SymbolicName>
+                        <Export-Package>
+                            org.antlr.v4.runtime,
+                            org.antlr.v4.runtime.atn,
+                            org.antlr.v4.runtime.dfa,
+                            org.antlr.v4.runtime.misc,
+                            org.antlr.v4.runtime.tree
+                        </Export-Package>
+                        <Import-Package></Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.antlr</groupId>
+            <artifactId>antlr4-runtime</artifactId>
+            <version>4.0</version>
+            <exclusions>
+              <exclusion>
+                <!--  UI Related Dependency -->
+                <artifactId>org.abego.treelayout.core</artifactId>
+                <groupId>org.abego.treelayout</groupId>
+              </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>
